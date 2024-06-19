@@ -1,12 +1,33 @@
 from pymongo import MongoClient
+from pymysql import connect
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from mysql.connector import connect
 
+# Importing MYSQL configs from the configuration module
+from app.api.config.env import  DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
+
+class MySQLDB:
+    def __init__(self, host: str, user: str, password: str, db_name: str):
+        SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{user}:{password}@{host}/{db_name}"
+        self._engine = create_engine(SQLALCHEMY_DATABASE_URL)
+        self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self._engine)
+
+    @property
+    def engine(self):
+        return self._engine
+
+mysql_db = MySQLDB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+
+
+'''
 # Importing MONGO_CLIENT from the configuration module
-from app.api.config.env import MONGO_CLIENT, DB_NAME
+from app.api.config.env import MONGO_CLIENT, DB_NAME_MONGO
 
 class Database:
     def __init__(self, uri: str):
         self._client = MongoClient(uri)
-        self._db = self._client[DB_NAME]
+        self._db = self._client[DB_NAME_MONGO]
 
     @property
     def client(self):
@@ -22,3 +43,4 @@ class Database:
         return self._db.items
     
 database = Database(MONGO_CLIENT)
+'''

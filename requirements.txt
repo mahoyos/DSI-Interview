@@ -8,3 +8,6 @@ incidentsBugDSI==0.4 # Developed by Daniela Torres from DSI. <3
 slowapi==0.1.8
 pytest==7.4.4
 requests==2.31.0
+SQLAlchemy
+mysql-connector-python
+pymysql

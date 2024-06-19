@@ -1,0 +1,17 @@
+2024-06-19 15:45:04,275 [INFO] - Started server process [22361]
+2024-06-19 15:45:04,275 [INFO] - Waiting for application startup.
+2024-06-19 15:45:04,276 [INFO] - Application startup complete.
+2024-06-19 15:45:14,605 [INFO] - Shutting down
+2024-06-19 15:45:14,705 [INFO] - Waiting for application shutdown.
+2024-06-19 15:45:14,706 [INFO] - Application shutdown complete.
+2024-06-19 15:45:14,706 [INFO] - Finished server process [22361]
+2024-06-19 15:45:15,475 [INFO] - Started server process [22374]
+2024-06-19 15:45:15,475 [INFO] - Waiting for application startup.
+2024-06-19 15:45:15,476 [INFO] - Application startup complete.
+2024-06-19 15:45:24,702 [INFO] - Shutting down
+2024-06-19 15:45:24,803 [INFO] - Waiting for application shutdown.
+2024-06-19 15:45:24,804 [INFO] - Application shutdown complete.
+2024-06-19 15:45:24,804 [INFO] - Finished server process [22374]
+2024-06-19 15:45:25,539 [INFO] - Started server process [22387]
+2024-06-19 15:45:25,540 [INFO] - Waiting for application startup.
+2024-06-19 15:45:25,540 [INFO] - Application startup complete.

@@ -1,4 +1,6 @@
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Add here all the environment variables
 
@@ -6,11 +8,18 @@ import os
 API_NAME = os.getenv('API_NAME')
 JWT_SECRET = os.getenv('JWT_SECRET') # The JWT secret string
 MONGO_CLIENT = os.getenv('MONGO_CLIENT') # Something like: mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]
-DB_NAME = os.getenv('DB_NAME')
+DB_NAME_MONGO = os.getenv('DB_NAME_MONGO')
 PRODUCTION_SERVER_URL = os.getenv('PRODUCTION_SERVER_URL')
 DEVELOPMENT_SERVER_URL = os.getenv('DEVELOPMENT_SERVER_URL')
 LOCALHOST_SERVER_URL = os.getenv('LOCALHOST_SERVER_URL')
 IS_PRODUCTION = os.getenv('IS_PRODUCTION') # Boolean to determine if is prod environment or nah
+
+# MySQl configuration
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_NAME = os.getenv('DB_NAME')
 
 # IncidentsBug library configuration
 JIRA_PROJECT_ID = os.getenv('JIRA_PROJECT_ID')

@@ -6,12 +6,13 @@ import pymongo.errors
 import logging
 
 # Configuration, models, methods and authentication modules imports
-from app.api.config.db import database
+#from app.api.config.db import database
 from app.api.config.limiter import limiter
 from app.api.config.env import API_NAME
-from app.api.models.models import ResponseError, ItemPatch, ItemCreate, Item
+from app.api.models.models import ResponseError, ItemPatch, ItemCreate, Item, Product, ProductCreate, ProductPatch
 from app.api.auth.auth import auth_handler
 from app.api.methods.methods import is_valid_objectid, convert_objectid_to_str, handle_error
+from app.api.database import create_product_in_db
 
 router = APIRouter()
 
@@ -26,6 +27,38 @@ logging.basicConfig(level=logging.INFO,
 
 logger = logging.getLogger(__name__)
 
+
+# Products routes
+
+@router.post('/products/',
+             response_model=Product,
+             status_code=status.HTTP_201_CREATED,
+             tags=["CRUD"],
+             responses={
+                 500: {"model": ResponseError, "description": "Internal server error."},
+                 429: {"model": ResponseError, "description": "Too many requests."}
+             }
+             )
+@limiter.limit("5/minute")
+def create_product(product: ProductCreate, request: Request):
+    try:
+        new_product = create_product_in_db(product)
+        
+        if not new_product:
+            raise HTTPException(status_code=500, detail="Product creation failed.")
+        
+        product = new_product.as_dict()
+        return product
+    except RateLimitExceeded:
+        raise HTTPException(status_code=429, detail="Too many requests.")
+    except Exception as e:
+        logger.error(f"Error creating product: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error.")
+    
+
+'''
+# Item routes
+    
 @router.post('/items/', 
              response_model=Item, 
              status_code=status.HTTP_201_CREATED, 
@@ -339,3 +372,5 @@ def send_email_background(email: str, background_tasks: BackgroundTasks, request
         raise
     except Exception as e:
         handle_error(e, logger)
+
+'''
