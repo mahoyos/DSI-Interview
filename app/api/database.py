@@ -1,5 +1,6 @@
 from app.api.models.models import ProductDB, ProductCreate
 from app.api.config.db import mysql_db
+from typing import List
 
 def create_product_in_db(product_data: ProductCreate) -> ProductDB:
 
@@ -14,4 +15,11 @@ def create_product_in_db(product_data: ProductCreate) -> ProductDB:
     
     except Exception as e:
         db.rollback()
+        raise e
+
+def get_all_products() -> List[ProductDB]:
+    db = mysql_db.SessionLocal()
+    try:
+        return db.query(ProductDB).all()
+    except Exception as e:
         raise e

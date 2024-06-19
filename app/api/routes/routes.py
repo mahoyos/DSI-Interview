@@ -12,7 +12,7 @@ from app.api.config.env import API_NAME
 from app.api.models.models import ResponseError, ItemPatch, ItemCreate, Item, Product, ProductCreate, ProductPatch
 from app.api.auth.auth import auth_handler
 from app.api.methods.methods import is_valid_objectid, convert_objectid_to_str, handle_error
-from app.api.database import create_product_in_db
+from app.api.database import create_product_in_db, get_all_products
 
 router = APIRouter()
 
@@ -54,7 +54,24 @@ def create_product(product: ProductCreate, request: Request):
     except Exception as e:
         logger.error(f"Error creating product: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error.")
-    
+
+
+@router.get('/products/', 
+            response_model=List[Product], 
+            tags=["CRUD"],
+            responses={
+                500: {"model": ResponseError, "description": "Internal server error."},
+                429: {"model": ResponseError, "description": "Too many requests."},
+                404: {"model": ResponseError, "description": "Not items found."},
+            })
+@limiter.limit("5/minute")
+def get_products(request: Request):
+    try:
+        products = [product.as_dict() for product in get_all_products()]
+        return products
+    except Exception as e:
+        logger.error(f"Error retrieving products: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error.")
 
 '''
 # Item routes
