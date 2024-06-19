@@ -12,7 +12,7 @@ from app.api.config.env import API_NAME
 from app.api.models.models import ResponseError, ItemPatch, ItemCreate, Item, Product, ProductCreate, ProductPatch
 from app.api.auth.auth import auth_handler
 from app.api.methods.methods import is_valid_objectid, convert_objectid_to_str, handle_error
-from app.api.database import create_product_in_db, get_all_products, get_product_by_id
+from app.api.database import create_product_in_db, get_all_products, get_product_by_id, delete_product_by_id
 
 router = APIRouter()
 
@@ -76,14 +76,13 @@ def get_products(request: Request):
         raise HTTPException(status_code=500, detail="Internal server error.")
 
 
-@router.get('/products/{product_id}', 
+@router.get('/products/{product_id}/', 
             response_model=Product, 
             tags=["CRUD"],
             responses={
                 500: {"model": ResponseError, "description": "Internal server error."},
                 429: {"model": ResponseError, "description": "Too many requests."},
                 404: {"model": ResponseError, "description": "Product not found"},
-                400: {"model": ResponseError, "description": "Invalid product_id format."},
             })
 @limiter.limit("5/minute")
 def get_product(product_id: int, request: Request):
@@ -98,6 +97,29 @@ def get_product(product_id: int, request: Request):
         raise HTTPException(status_code=429, detail="Too many requests.")
     except Exception as e:
         logger.error(f"Error retrieving product: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error.")
+    
+@router.delete('/products/{product_id}/',
+               response_model=Product,
+               tags=["CRUD"],
+               responses={
+                   500: {"model": ResponseError, "description": "Internal server error."},
+                   429: {"model": ResponseError, "description": "Too many requests."},
+                   404: {"model": ResponseError, "description": "Product not found or not deleted."},
+               })
+@limiter.limit("5/minute")
+def delete_product(product_id: int, request: Request):
+    try:
+        product_deleted = delete_product_by_id(product_id)
+        print("Product deleted es" + str(product_deleted) + str(type(product_deleted)))
+        if product_deleted is None:
+            raise HTTPException(status_code=404, detail="Product not found")
+        return product_deleted.as_dict()
+    except HTTPException as http_exception:
+        raise http_exception
+    except RateLimitExceeded:
+        raise HTTPException(status_code=429, detail="Too many requests.")
+    except Exception as e:
         raise HTTPException(status_code=500, detail="Internal server error.")
 '''
 # Item routes

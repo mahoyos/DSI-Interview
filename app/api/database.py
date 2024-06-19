@@ -1,6 +1,8 @@
 from app.api.models.models import ProductDB, ProductCreate
 from app.api.config.db import mysql_db
 from typing import List, Optional
+from sqlalchemy.orm.exc import NoResultFound
+
 
 def create_product_in_db(product_data: ProductCreate) -> ProductDB:
 
@@ -28,5 +30,19 @@ def get_product_by_id(product_id: int) -> Optional[ProductDB]:
     db = mysql_db.SessionLocal()
     try:
         return db.query(ProductDB).filter(ProductDB.id == product_id).first()
+    except Exception as e:
+        raise e
+    
+def delete_product_by_id(product_id: int) -> ProductDB:
+    db = mysql_db.SessionLocal()
+    try:
+        product = db.query(ProductDB).filter(ProductDB.id == product_id).first()
+        if product is None:
+            return None
+        db.delete(product)
+        db.commit()
+        return product
+    except NoResultFound:
+        return None
     except Exception as e:
         raise e
