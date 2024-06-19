@@ -6,7 +6,6 @@ from sqlalchemy.ext.declarative import declarative_base
 # Define your data models and schemas here
 # For now, using generic examples
 
-
 # Item model
 
 class ItemPatch(BaseModel):
