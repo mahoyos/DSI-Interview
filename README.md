@@ -109,7 +109,7 @@ The project provides a series of endpoints to perform CRUD operations on `items`
 - `DELETE /items/{item_id}/`:  Deletes a specific product by ID.
 
 ### Curl Commands for Testing Endpoints
-Below are the curl commands that use curl to facilitate the process of testing the endpoints.
+Below are the curl commands that use curl to facilitate the process of testing the endpoints. Replace {product_id} for the ID of a product.
 
 - CREATE_PRODUCT_CURL=`curl -X POST http://localhost:8000/api/v1/example/products/ -H "Content-Type: application/json" -d "{\"name\": \"Name\", \"description\": \"Description\", \"price\": 19.99}"`
 
@@ -119,7 +119,7 @@ Below are the curl commands that use curl to facilitate the process of testing t
 
 - DELETE_PRODUCT_BY_ID_CURL=`curl -X DELETE http://localhost:8000/api/v1/example/products/{product_id}/`
 
-- UPDATE_PRODUCT_BY_ID_CURL=`curl -X PATCH "http://localhost:8000/api/v1/example/products/7/" -H "Content-Type: application/json" -d "{\"name\": \"New_name\", \"description\": \"New_Description\", \"price\": 99.99}"`
+- UPDATE_PRODUCT_BY_ID_CURL=`curl -X PATCH "http://localhost:8000/api/v1/example/products/{product_id}/" -H "Content-Type: application/json" -d "{\"name\": \"New_name\", \"description\": \"New_Description\", \"price\": 99.99}"`
 
 ## Contributions
 
