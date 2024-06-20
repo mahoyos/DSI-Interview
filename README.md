@@ -14,7 +14,6 @@ This project aimed to create a straightforward CRUD (Create, Read, Update, Delet
 │   │   │   ├── db.py # Database configuration. \
 │   │   │   ├── env.py # Environment variables. \
 │   │   │   ├── exceptions.py # Project-specific exceptions. \
-|   |   |
 │   │   ├── database.py #Functions and operations with DB \
 │   │   ├── methods \
 │   │   │   ├── methods.py \
@@ -31,18 +30,67 @@ This project aimed to create a straightforward CRUD (Create, Read, Update, Delet
 ├── README.md \
 └── requirements.txt \
 
+## Database configuration
+
+For this project, MySQL was chosen as the relational database. It is hosted locally, and proper configuration is essential for the project to function correctly.
+
+The "interview" database consists solely of a "products" table. This table has four columns defined in the model as follows:
+
+**id**: Column(Integer, primary_key=True, index=True, autoincrement=True)
+**name**: Column(String, index=True)
+**description**: Column(String, index=True)
+**price**: Column(Float)
+
+To set up the required database for this project, follow these steps:
+
+1. **Log in to MySQL**:
+    ```bash
+    mysql -u {username} -p
+    ```
+
+2. **Create the "interview" database**:
+    ```sql
+    CREATE DATABASE interview;
+    ```
+
+3. **Create a user and grant privileges for the database**:
+    ```sql
+    CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';
+    GRANT ALL PRIVILEGES ON interview.* TO 'root'@'localhost';
+    FLUSH PRIVILEGES;
+    ```
+
+4. **Select the "interview" database**:
+    ```sql
+    USE interview;
+    ```
+
+5. **Create the "products" table**:
+    ```sql
+    CREATE TABLE products (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        description TEXT,
+        price DECIMAL(10, 2) NOT NULL
+    );
+    ```
+
+With these steps, the required database for the project will be set up and ready for use.
 
 ## Configuration Instructions
 
 1. **Environment Setup**: Ensure you have Python 3.8 or higher installed.
 2. **Install Dependencies**: Run 'pip install -r requirements.txt' to install the necessary dependencies.
-3. **Environment Variables**: Configure the required environment variables as described in 'app/api/config/env.py'.
-4. **Run tests**: Execute 'PYTHONPATH=./ pytest' to start running the tests.  (The warnings related to the deprecated use of async came from the initial repository and were not addressed, as it was not the project's objective to correct them).
-5. **Run the Server**: Execute 'uvicorn app.app:app --reload --port 8000' to start the development server on port 8000.
+3. **Create Database**: Create the database as explained in the Database Configuration section.
+4. **Environment Variables**: Configure the required environment variables as described in 'app/api/config/env.py'. (The .env file should never be uploaded to a repository. However, for practicality and ease of execution, an exception was made in this case).
+5. **Run tests**: Execute 'PYTHONPATH=./ pytest' to start running the tests.  (The warnings related to the deprecated use of async came from the initial repository and were not addressed, as it was not the project's objective to correct them).
+6. **Run the Server**: Execute 'uvicorn app.app:app --reload --port 8000' to start the development server on port 8000.
 
 ## Endpoints
 
 The project provides a series of endpoints to perform CRUD operations on `items` and `products`. The endpoints for Items are disabled because the credentials were not available and the project's focus was on products (which are functioning without any issues):
+
+### Items
 
 - `POST /items/`: Creates a new product.
 - `GET /items/`: Lists all products.
@@ -51,11 +99,28 @@ The project provides a series of endpoints to perform CRUD operations on `items`
 - `PATCH /items/{item_id}/`: Partial update of an item by ID.
 - `DELETE /items/{item_id}/`:  Deletes a specific product by ID.
 
+### Products
+
 - `POST /items/`: Creates a new product.
 - `GET /items/`: Lists all products.
 - `GET /items/{item_id}/`: Retrieves a specific product by ID.
 - `PATCH /items/{item_id}/`: Updates a product by ID.
 - `DELETE /items/{item_id}/`:  Deletes a specific product by ID.
+
+### Curl Commands for Testing Endpoints
+Below are the curl commands that use curl to facilitate the process of testing the endpoints.
+
+-   CREATE_PRODUCT_CURL= 'curl -X POST http://localhost:8000/api/v1/example/products/ -H "Content-Type: application/json" -d "{\"name\": \"Name\", \"description\": \"Description\", \"price\": 19.99}"'
+
+-   GET_ALL_PRODUCTS_CURL= 'curl -X GET "http://localhost:8000/api/v1/example/products/" -H "Content-Type: application/json"'
+
+-   GET_PRODUCT_BY_ID_CURL= 'curl -X GET "http://localhost:8000/api/v1/example/products/{product_id}/" -H "Content-Type: application/json"'
+
+-   DELETE_PRODUCT_BY_ID_CURL= 'curl -X DELETE http://localhost:8000/api/v1/example/products/{product_id}/'
+
+-   UPDATE_PRODUCT_BY_ID_CURL= 'curl -X PATCH "http://localhost:8000/api/v1/example/products/7/" -H "Content-Type: application/json" -d "{\"name\": \"New_name\", \"description\": \"New_Description\", \"price\": 99.99}"'
+
+
 
 ## Contributions
 
