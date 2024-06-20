@@ -4,28 +4,36 @@ Descripción breve del proyecto.
 
 ## Estructura del Proyecto
 
-. \
-├── app \
-│   ├── api \
-│   │   ├── adapters \
-│   │   │   └── README.md  # Adapters explanation for external services. \
-│   │   ├── auth \
-│   │   │   └── auth.py  # Authentication related operations. \
-│   │   ├── config \
-│   │   │   ├── db.py  # Database configuration. \
-│   │   │   ├── env.py  # Environment variables. \
-│   │   │   └── exceptions.py  # Project-specific exceptions. \
-│   │   ├── methods \
-│   │   │   └── README.md  # Utility functions explanation for routes. \
-│   │   ├── models \
-│   │   │   └── models.py  # Pydantic models. \
-│   │   └── routes \
-│   │       └── routes.py  # API routes. \
-│   ├── app.py  # Entry point for the FastAPI application. \
-└── .env.example \
-└── Dockerfile \
-└── README.md \
-└── requirements.txt \
+.
+├── app
+│   ├── api
+│   │   ├── adapters
+│   │   │   └── README.md # Adapters explanation for external services. \
+│   │   ├── auth
+│   │   │   ├── auth.py # Authentication related operations. \
+│   │   │   └── __pycache__
+│   │   │       └── auth.cpython-310.pyc
+│   │   ├── config
+│   │   │   ├── db.py # Database configuration. \
+│   │   │   ├── env.py # Environment variables. \
+│   │   │   ├── exceptions.py # Project-specific exceptions. \
+|   |   |
+│   │   ├── database.py #Functions and operations with DB
+│   │   ├── methods
+│   │   │   ├── methods.py 
+│   │   │   └── README.md # Utility functions explanation for routes. \
+│   │   ├── models
+│   │   │   ├── models.py # Pydantic and sqlalchemy models. \
+│   │   ├── routes
+│   │   │   ├── README.md 
+│   │   │   └── routes.py # API routes. \
+│   │   └── test
+│   │       └── test_endpoints.py
+│   ├── app.py # Entry point for the FastAPI application. \
+├── Dockerfile 
+├── README.md 
+└── requirements.txt
+
 
 ## Instrucciones de Configuración
 
@@ -48,10 +56,6 @@ El proyecto proporciona una serie de endpoints para realizar operaciones CRUD en
 - `PUT /items/{item_id}/`: Actualiza un ítem específico por ID.
 - `PATCH /items/{item_id}/`: Actualización parcial de un ítem por ID.
 - `DELETE /items/{item_id}/`: Elimina un ítem específico por ID.
-
-## Excepciones
-
-El sistema maneja y reporta errores automáticamente a través del módulo `bugReportsInstance`. Asegúrese de configurar correctamente este módulo para recibir notificaciones de errores.
 
 ## Contribuciones
 

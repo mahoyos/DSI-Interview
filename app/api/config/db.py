@@ -1,8 +1,6 @@
-from pymongo import MongoClient
-from pymysql import connect
+#from pymongo import MongoClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from mysql.connector import connect
 
 # Importing MYSQL configs from the configuration module
 from app.api.config.env import  DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
@@ -21,6 +19,11 @@ mysql_db = MySQLDB(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
 
 
 '''
+The connection to Mongo is disabled since the credentials from the
+.env.example were not working, which caused errors. It can be uncommented 
+when appropriate values are added to the .env.
+
+
 # Importing MONGO_CLIENT from the configuration module
 from app.api.config.env import MONGO_CLIENT, DB_NAME_MONGO
 

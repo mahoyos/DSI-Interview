@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, Float
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 # Define your data models and schemas here
 # For now, using generic examples
@@ -44,6 +44,9 @@ class Item(ItemCreate):
 Base = declarative_base()
 
 class ProductDB(Base):
+    """
+    Database model representing a product entity.
+    """
     __tablename__ = "products"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String, index=True)
@@ -51,6 +54,9 @@ class ProductDB(Base):
     price = Column(Float)
 
     def as_dict(self):
+        """
+        Converts the ProductDB instance into a dictionary.
+        """
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     
 class ProductPatch(BaseModel):

@@ -1,17 +1,18 @@
 from fastapi import APIRouter, HTTPException, Request, Depends, status
 from slowapi.errors import RateLimitExceeded
-from bson import ObjectId
+#from bson import ObjectId
+#import pymongo.errors
 from typing import List
-import pymongo.errors
 import logging
 
 # Configuration, models, methods and authentication modules imports
+
 #from app.api.config.db import database
 from app.api.config.limiter import limiter
 from app.api.config.env import API_NAME
 from app.api.models.models import ResponseError, ItemPatch, ItemCreate, Item, Product, ProductCreate, ProductPatch
 from app.api.auth.auth import auth_handler
-from app.api.methods.methods import is_valid_objectid, convert_objectid_to_str, handle_error
+#from app.api.methods.methods import is_valid_objectid, convert_objectid_to_str, handle_error
 from app.api.database import create_product_in_db, get_all_products, get_product_by_id, delete_product_by_id, update_product_in_db
 
 router = APIRouter()
@@ -41,6 +42,18 @@ logger = logging.getLogger(__name__)
              )
 @limiter.limit("5/minute")
 def create_product(product: ProductCreate, request: Request):
+    """
+    Create a new product in the database.
+
+    Args:
+        - product (ProductCreate): Product to be created.
+
+    Returns:
+        - Product: Created product with its ID.
+
+    Raises:
+        - HTTPException: If the product creation fails or if there are too many requests.
+    """
     try:
         new_product = create_product_in_db(product)
         
@@ -66,6 +79,15 @@ def create_product(product: ProductCreate, request: Request):
             })
 @limiter.limit("5/minute")
 def get_products(request: Request):
+    """
+    Retrieve all products from the database.
+
+    Returns:
+        - List[Product]: List of products.
+
+    Raises:
+        - HTTPException: If there is an error retrieving products or if there are too many requests.
+    """
     try:
         products = [product.as_dict() for product in get_all_products()]
         return products
@@ -86,6 +108,18 @@ def get_products(request: Request):
             })
 @limiter.limit("5/minute")
 def get_product(product_id: int, request: Request):
+    """
+    Retrieve a product by its ID from the database.
+
+    Args:
+        - product_id (int): ID of the product to retrieve.
+
+    Returns:
+        - Product: Retrieved product.
+
+    Raises:
+        - HTTPException: If the product is not found or if there are too many requests.
+    """
     try:
         product = get_product_by_id(product_id)
         if product is None:
@@ -109,6 +143,18 @@ def get_product(product_id: int, request: Request):
                })
 @limiter.limit("5/minute")
 def delete_product(product_id: int, request: Request):
+    """
+    Delete a product by its ID from the database.
+
+    Args:
+        - product_id (int): ID of the product to delete.
+
+    Returns:
+        - Product: Deleted product.
+
+    Raises:
+        - HTTPException: If the product is not found, not deleted, or if there are too many requests.
+    """
     try:
         product_deleted = delete_product_by_id(product_id)
         print("Product deleted es" + str(product_deleted) + str(type(product_deleted)))
@@ -132,6 +178,19 @@ def delete_product(product_id: int, request: Request):
               })
 @limiter.limit("5/minute")
 def update_product(product_id: int, product_update: ProductPatch, request: Request):
+    """
+    Update a product by its ID in the database.
+
+    Args:
+        - product_id (int): ID of the product to update.
+        - product_update (ProductPatch): Updated product data.
+
+    Returns:
+        - Product: Updated product.
+
+     Raises:
+        - HTTPException: If the product is not found, not updated, or if there are too many requests.
+    """
     try:
         product = get_product_by_id(product_id)
         if product is None:
@@ -151,6 +210,10 @@ def update_product(product_id: int, product_update: ProductPatch, request: Reque
         logger.error(f"Error updating product: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error.")
 '''
+These endpoints are commented out because there is no connection to MongoDB, 
+which causes errors. When the connection with MongoDB is available, they can 
+be uncommented.
+
 # Item routes
     
 @router.post('/items/', 
