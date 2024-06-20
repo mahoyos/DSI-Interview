@@ -45,7 +45,7 @@ To set up the required database for this project, follow these steps:
 
 1. **Log in to MySQL**:
     ```bash
-    mysql -u {username} -p
+    mysql -u root -p
     ```
 
 2. **Create the "interview" database**:
