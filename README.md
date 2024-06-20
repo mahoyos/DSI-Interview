@@ -121,7 +121,6 @@ Below are the curl commands that use curl to facilitate the process of testing t
 
 - UPDATE_PRODUCT_BY_ID_CURL=`curl -X PATCH "http://localhost:8000/api/v1/example/products/7/" -H "Content-Type: application/json" -d "{\"name\": \"New_name\", \"description\": \"New_Description\", \"price\": 99.99}"`
 
-
 ## Contributions
 
 If you wish to contribute to the project, please follow these guidelines:
