@@ -79,10 +79,11 @@ With these steps, the required database for the project will be set up and ready
 
 ## Configuration Instructions
 
+0. **Clone the repository** Run `git clone https://github.com/mahoyos/DSI-Interview`
 1. **Environment Setup**: Ensure you have Python 3.8 or higher installed.
-2. **Install Dependencies**: Run `pip install -r requirements.txt` to install the necessary dependencies.
+2. **Install Dependencies**: Go to the directory where you cloned the project and Run `pip install -r requirements.txt` to install the necessary dependencies.
 3. **Create Database**: Create the database as explained in the Database Configuration section.
-4. **Environment Variables**: Configure the required environment variables as described in `app/api/config/env.py`. (The .env file should never be uploaded to a repository. However, for practicality and ease of execution, an exception was made in this case.)
+4. **Environment Variables**: Configure the required environment variables as described in `app/api/config/env.py` as you need. (The .env file should never be uploaded to a repository. However, for practicality and ease of execution, an exception was made in this case. If you are not going to make changes, proceed to the next step. )
 5. **Run tests**: Execute `PYTHONPATH=./ pytest` to start running the tests.  (The warnings related to the deprecated use of async came from the initial repository and were not addressed, as it was not the project's objective to correct them.)
 6. **Run the Server**: Execute `uvicorn app.app:app --reload --port 8000` to start the development server on port 8000.
 
