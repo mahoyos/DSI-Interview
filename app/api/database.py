@@ -1,4 +1,4 @@
-from app.api.models.models import ProductDB, ProductCreate
+from app.api.models.models import ProductDB, ProductCreate, ProductPatch
 from app.api.config.db import mysql_db
 from typing import List, Optional
 from sqlalchemy.orm.exc import NoResultFound
@@ -45,4 +45,22 @@ def delete_product_by_id(product_id: int) -> ProductDB:
     except NoResultFound:
         return None
     except Exception as e:
+        raise e
+    
+def update_product_in_db(product_id: int, product_update: ProductPatch) -> Optional[ProductDB]:
+    db = mysql_db.SessionLocal()
+    try:
+        product = db.query(ProductDB).filter(ProductDB.id == product_id).first()
+        if not product:
+            return None
+
+        update_data = product_update.dict(exclude_unset=True)
+        for key, value in update_data.items():
+            setattr(product, key, value)
+        
+        db.commit()
+        db.refresh(product)
+        return product
+    except Exception as e:
+        db.rollback()
         raise e

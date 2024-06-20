@@ -12,7 +12,7 @@ from app.api.config.env import API_NAME
 from app.api.models.models import ResponseError, ItemPatch, ItemCreate, Item, Product, ProductCreate, ProductPatch
 from app.api.auth.auth import auth_handler
 from app.api.methods.methods import is_valid_objectid, convert_objectid_to_str, handle_error
-from app.api.database import create_product_in_db, get_all_products, get_product_by_id, delete_product_by_id
+from app.api.database import create_product_in_db, get_all_products, get_product_by_id, delete_product_by_id, update_product_in_db
 
 router = APIRouter()
 
@@ -120,6 +120,35 @@ def delete_product(product_id: int, request: Request):
     except RateLimitExceeded:
         raise HTTPException(status_code=429, detail="Too many requests.")
     except Exception as e:
+        raise HTTPException(status_code=500, detail="Internal server error.")
+    
+@router.patch('/products/{product_id}/',
+              response_model=Product,
+              tags=["CRUD"],
+              responses={
+                  500: {"model": ResponseError, "description": "Internal server error."},
+                  429: {"model": ResponseError, "description": "Too many requests."},
+                  404: {"model": ResponseError, "description": "Product not found or not updated."},
+              })
+@limiter.limit("5/minute")
+def update_product(product_id: int, product_update: ProductPatch, request: Request):
+    try:
+        product = get_product_by_id(product_id)
+        if product is None:
+            raise HTTPException(status_code=404, detail="Product not found")
+
+        updated_product = update_product_in_db(product_id, product_update)
+
+        if updated_product is None:
+            raise HTTPException(status_code=500, detail="Product update failed.")
+
+        return updated_product.as_dict()
+    except HTTPException as http_exception:
+        raise http_exception
+    except RateLimitExceeded:
+        raise HTTPException(status_code=429, detail="Too many requests.")
+    except Exception as e:
+        logger.error(f"Error updating product: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error.")
 '''
 # Item routes
