@@ -28,7 +28,7 @@ This project aimed to create a straightforward CRUD (Create, Read, Update, Delet
 │   ├── app.py # Entry point for the FastAPI application. \
 ├── Dockerfile \
 ├── README.md \
-└── requirements.txt \
+└── requirements.txt 
 
 ## Database configuration
 
@@ -80,11 +80,12 @@ With these steps, the required database for the project will be set up and ready
 ## Configuration Instructions
 
 1. **Environment Setup**: Ensure you have Python 3.8 or higher installed.
-2. **Install Dependencies**: Run 'pip install -r requirements.txt' to install the necessary dependencies.
+2. **Install Dependencies**: Run `pip install -r requirements.txt` to install the necessary dependencies.
 3. **Create Database**: Create the database as explained in the Database Configuration section.
-4. **Environment Variables**: Configure the required environment variables as described in 'app/api/config/env.py'. (The .env file should never be uploaded to a repository. However, for practicality and ease of execution, an exception was made in this case).
-5. **Run tests**: Execute 'PYTHONPATH=./ pytest' to start running the tests.  (The warnings related to the deprecated use of async came from the initial repository and were not addressed, as it was not the project's objective to correct them).
-6. **Run the Server**: Execute 'uvicorn app.app:app --reload --port 8000' to start the development server on port 8000.
+4. **Environment Variables**: Configure the required environment variables as described in `app/api/config/env.py`. (The .env file should never be uploaded to a repository. However, for practicality and ease of execution, an exception was made in this case.)
+5. **Run tests**: Execute `PYTHONPATH=./ pytest` to start running the tests.  (The warnings related to the deprecated use of async came from the initial repository and were not addressed, as it was not the project's objective to correct them.)
+6. **Run the Server**: Execute `uvicorn app.app:app --reload --port 8000` to start the development server on port 8000.
+
 
 ## Endpoints
 
@@ -110,16 +111,15 @@ The project provides a series of endpoints to perform CRUD operations on `items`
 ### Curl Commands for Testing Endpoints
 Below are the curl commands that use curl to facilitate the process of testing the endpoints.
 
--   CREATE_PRODUCT_CURL= 'curl -X POST http://localhost:8000/api/v1/example/products/ -H "Content-Type: application/json" -d "{\"name\": \"Name\", \"description\": \"Description\", \"price\": 19.99}"'
+- CREATE_PRODUCT_CURL=`curl -X POST http://localhost:8000/api/v1/example/products/ -H "Content-Type: application/json" -d "{\"name\": \"Name\", \"description\": \"Description\", \"price\": 19.99}"`
 
--   GET_ALL_PRODUCTS_CURL= 'curl -X GET "http://localhost:8000/api/v1/example/products/" -H "Content-Type: application/json"'
+- GET_ALL_PRODUCTS_CURL=`curl -X GET "http://localhost:8000/api/v1/example/products/" -H "Content-Type: application/json"`
 
--   GET_PRODUCT_BY_ID_CURL= 'curl -X GET "http://localhost:8000/api/v1/example/products/{product_id}/" -H "Content-Type: application/json"'
+- GET_PRODUCT_BY_ID_CURL=`curl -X GET "http://localhost:8000/api/v1/example/products/{product_id}/" -H "Content-Type: application/json"`
 
--   DELETE_PRODUCT_BY_ID_CURL= 'curl -X DELETE http://localhost:8000/api/v1/example/products/{product_id}/'
+- DELETE_PRODUCT_BY_ID_CURL=`curl -X DELETE http://localhost:8000/api/v1/example/products/{product_id}/`
 
--   UPDATE_PRODUCT_BY_ID_CURL= 'curl -X PATCH "http://localhost:8000/api/v1/example/products/7/" -H "Content-Type: application/json" -d "{\"name\": \"New_name\", \"description\": \"New_Description\", \"price\": 99.99}"'
-
+- UPDATE_PRODUCT_BY_ID_CURL=`curl -X PATCH "http://localhost:8000/api/v1/example/products/7/" -H "Content-Type: application/json" -d "{\"name\": \"New_name\", \"description\": \"New_Description\", \"price\": 99.99}"`
 
 
 ## Contributions
