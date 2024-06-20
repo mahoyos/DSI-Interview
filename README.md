@@ -1,71 +1,72 @@
-# Nombre del Proyecto
+# DSI Interview
 
-Descripción breve del proyecto.
+This project aimed to create a straightforward CRUD (Create, Read, Update, Delete) API in FastAPI for managing products. It follows a standard API structure and enables users to perform basic operations like creating, reading, updating, and deleting product information in a relational database. MySQL was chosen as the backend database. The coding standards from the initially provided repository were followed as much as possible, but certain decisions were made as deemed appropriate.
 
-## Estructura del Proyecto
-
+## Project structure
 .
-├── app
-│   ├── api
-│   │   ├── adapters
+├── app \
+│   ├── api \
+│   │   ├── adapters \
 │   │   │   └── README.md # Adapters explanation for external services. \
-│   │   ├── auth
+│   │   ├── auth \
 │   │   │   ├── auth.py # Authentication related operations. \
-│   │   │   └── __pycache__
-│   │   │       └── auth.cpython-310.pyc
-│   │   ├── config
+│   │   ├── config \
 │   │   │   ├── db.py # Database configuration. \
 │   │   │   ├── env.py # Environment variables. \
 │   │   │   ├── exceptions.py # Project-specific exceptions. \
 |   |   |
-│   │   ├── database.py #Functions and operations with DB
-│   │   ├── methods
-│   │   │   ├── methods.py 
+│   │   ├── database.py #Functions and operations with DB \
+│   │   ├── methods \
+│   │   │   ├── methods.py \
 │   │   │   └── README.md # Utility functions explanation for routes. \
-│   │   ├── models
+│   │   ├── models \
 │   │   │   ├── models.py # Pydantic and sqlalchemy models. \
-│   │   ├── routes
-│   │   │   ├── README.md 
+│   │   ├── routes \
+│   │   │   ├── README.md \
 │   │   │   └── routes.py # API routes. \
-│   │   └── test
-│   │       └── test_endpoints.py
+│   │   └── test \
+│   │       └── test_endpoints.py \
 │   ├── app.py # Entry point for the FastAPI application. \
-├── Dockerfile 
-├── README.md 
-└── requirements.txt
+├── Dockerfile \
+├── README.md \
+└── requirements.txt \
 
 
-## Instrucciones de Configuración
+## Configuration Instructions
 
-1. **Configuración del entorno**: Asegúrese de tener Python 3.8 o superior instalado.
-2. **Instalación de dependencias**: Ejecute `pip install -r requirements.txt` para instalar las dependencias necesarias.
-3. **Variables de entorno**: Configure las variables de entorno necesarias como se describe en `app/api/config/env.py`.
-4. **Ejecución**: Ejecute `uvicorn app.app:app --reload --port 8000` para iniciar el servidor de desarrollo en el puerto 8000.
-
-## Autenticación
-
-El proyecto utiliza JWT para la autenticación. Asegúrese de proporcionar un token JWT válido en el encabezado `Authorization` para acceder a los endpoints protegidos.
+1. **Environment Setup**: Ensure you have Python 3.8 or higher installed.
+2. **Install Dependencies**: Run 'pip install -r requirements.txt' to install the necessary dependencies.
+3. **Environment Variables**: Configure the required environment variables as described in 'app/api/config/env.py'.
+4. **Run tests**: Execute 'PYTHONPATH=./ pytest' to start running the tests.  (The warnings related to the deprecated use of async came from the initial repository and were not addressed, as it was not the project's objective to correct them).
+5. **Run the Server**: Execute 'uvicorn app.app:app --reload --port 8000' to start the development server on port 8000.
 
 ## Endpoints
 
-El proyecto proporciona una serie de endpoints para realizar operaciones CRUD en `items`:
+The project provides a series of endpoints to perform CRUD operations on `items` and `products`. The endpoints for Items are disabled because the credentials were not available and the project's focus was on products (which are functioning without any issues):
 
-- `POST /items/`: Crea un nuevo ítem.
-- `GET /items/`: Lista todos los ítems.
-- `GET /items/{item_id}/`: Obtiene un ítem específico por ID.
-- `PUT /items/{item_id}/`: Actualiza un ítem específico por ID.
-- `PATCH /items/{item_id}/`: Actualización parcial de un ítem por ID.
-- `DELETE /items/{item_id}/`: Elimina un ítem específico por ID.
+- `POST /items/`: Creates a new product.
+- `GET /items/`: Lists all products.
+- `GET /items/{item_id}/`: Retrieves a specific product by ID.
+- `PUT /items/{item_id}/`: Updates a product by ID.
+- `PATCH /items/{item_id}/`: Partial update of an item by ID.
+- `DELETE /items/{item_id}/`:  Deletes a specific product by ID.
 
-## Contribuciones
+- `POST /items/`: Creates a new product.
+- `GET /items/`: Lists all products.
+- `GET /items/{item_id}/`: Retrieves a specific product by ID.
+- `PATCH /items/{item_id}/`: Updates a product by ID.
+- `DELETE /items/{item_id}/`:  Deletes a specific product by ID.
 
-Si desea contribuir al proyecto, siga las siguientes pautas:
+## Contributions
 
-1. **Fork del repositorio**: Haga un fork del repositorio y clone su fork en su máquina local.
-2. **Crear una nueva rama**: Crea una rama con un nombre descriptivo basado en la funcionalidad o corrección que esté implementando.
-3. **Haga sus cambios**: Realice y pruebe sus cambios en esa rama.
-4. **Solicitar un pull request**: Una vez que haya terminado, envíe un pull request al repositorio original.
+If you wish to contribute to the project, please follow these guidelines:
 
-## Licencia
+1. **Fork the repository**: Fork the repository and clone your fork to your local machine.
 
-Este proyecto está bajo la licencia de código abierto.
+2. **Create a new branch**: Create a branch with a descriptive name based on the functionality or fix you are implementing.
+3. **Make your changes**: Make and test your changes in that branch.
+4. **Submit a pull request**: Once you are finished, submit a pull request to the original repository.
+
+## License
+
+This project is under an open-source license.
